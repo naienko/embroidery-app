@@ -1,5 +1,14 @@
 const RemoteURL = "http://localhost:3001/api"
 
+/*
+let AccessToken = localStorage
+fetch(`${RemoteURL}/${db}`, {
+    headers: {
+      Authorization: "`${AccessToken}`"
+    }
+  })
+*/
+
 export default {
     getOne: async (id, db) => {
         const results = await fetch(`${RemoteURL}/${db}/${id}`)
@@ -32,5 +41,17 @@ export default {
             },
             body: JSON.stringify(newObject)
         })
+    },
+    //user-specific methods
+    login: (loginObject) => {
+        const results = fetch(`${RemoteURL}/stitchers/login`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(loginObject)
+        })
+        return results.json()
     }
 }
