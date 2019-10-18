@@ -33,7 +33,7 @@ class Login extends Component {
                     //store the input data in sessionStorage (like a cookie)
                     sessionStorage.setItem("userId", parseInt(user[0].userId))
                     sessionStorage.setItem("AccessToken", user[0].id)
-                    //this.props.setAuth()
+                    this.props.setAuth()
                 }
             )
         } else {
