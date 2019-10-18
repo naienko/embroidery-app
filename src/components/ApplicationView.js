@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 
 import APIManager from "../modules/APIManager";
 import Inventory from "./Inventory";
+import Login from "./auth/Login";
 
 
 export default class ApplicationView extends Component {
@@ -29,12 +30,16 @@ export default class ApplicationView extends Component {
 	render() {
 		return (
 			//routes go here
-			<Route exact path="/" render={(props) => {
-				return <Inventory 
+			<React.Fragment>
+				<Route exact path="/login" component={Login} />
+
+				<Route exact path="/" render={(props) => {
+					return <Inventory 
 					companies={this.state.companies}
+					/>
+				}}
 				/>
-			}}
-			/>
+			</React.Fragment>
 		)
 	}
 }

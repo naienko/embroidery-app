@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-import Form from "reactstrap/Form";
-import Button from "reactstrap/Button";
+import { Form, FormGroup, Label, Input } from "reactstrap";
+import { Button } from "reactstrap";
 
 import APIManager from "../../modules/APIManager";
 
@@ -47,24 +47,20 @@ class Login extends Component {
             <React.Fragment>
                 <Form onSubmit={this.handleLogin} className="m-sm-3">
                     <h1>Please sign in</h1>
-                    <Form.Group controlId="username">
-                        <Form.Label>
-                            Username
-                        </Form.Label>
-                        <Form.Control onChange={this.handleFieldChange} placeholder="username or email" required autoFocus />
-                    </Form.Group>
-                    <Form.Group controlId="password">
-                        <Form.Label>
-                            Password
-                        </Form.Label>
-                        <Form.Control onChange={this.handleFieldChange} type="password" placeholder="password" required />
-                    </Form.Group>
-                    <Form.Group className="text-right">
-                        <Button variant="primary" type="submit">Sign in</Button>
-                    </Form.Group>
+                    <FormGroup>
+                        <Label for="username">Username</Label>
+                        <Input onChange={this.handleFieldChange} name="username" id="username" placeholder="username or email" required autoFocus />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="password">Password</Label>
+                        <Input onChange={this.handleFieldChange} name="password" id="password" type="password" placeholder="password" required />
+                    </FormGroup>
+                    <FormGroup className="text-right">
+                        <Button color="primary" type="submit">Sign in</Button>
+                    </FormGroup>
                 </Form>
                 <div className="text-center">
-                    Not a member yet? <Button variant="secondary" onClick={() => this.props.history.push("/register")}>Register</Button>
+                    Not a member yet? <Button color="secondary" onClick={() => this.props.history.push("/register")}>Register</Button>
                 </div>
             </React.Fragment>
         )
