@@ -4,11 +4,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import * as serviceWorker from './serviceWorker';
-import UserAccessLayer from './components/UserAccessLayer';
+import Embroidery from './Embroidery';
 
 ReactDOM.render(
 	<Router>
-		<UserAccessLayer />
+		<Embroidery />
 	</Router>
 , document.getElementById('root'));
 
