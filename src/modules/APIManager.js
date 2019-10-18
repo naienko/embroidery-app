@@ -44,13 +44,13 @@ export default {
     },
     //user-specific methods
     login: (loginObject) => {
-        const results = fetch(`${RemoteURL}/stitchers/login`, {
+        return fetch(`${RemoteURL}/stitchers/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(loginObject)
         })
-        return results.json()
+        .then(results => results.json())
     }
 }

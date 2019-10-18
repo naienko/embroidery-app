@@ -30,9 +30,10 @@ class Login extends Component {
             loginObject.password = this.state.password
             APIManager.login(loginObject).then(
                 user => {
+                    debugger;
                     //store the input data in sessionStorage (like a cookie)
-                    sessionStorage.setItem("userId", parseInt(user[0].userId))
-                    sessionStorage.setItem("AccessToken", user[0].id)
+                    sessionStorage.setItem("userId", parseInt(user.userId))
+                    sessionStorage.setItem("AccessToken", user.id)
                     this.props.setAuth()
                 }
             )
