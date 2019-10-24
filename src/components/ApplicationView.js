@@ -66,7 +66,7 @@ export default class ApplicationView extends Component {
 				<Route path="/stash/new" render={(props) => {
 					return <AddNew 
 						companies={this.state.companies} 
-						fibers={this.state.identifiers} 
+						identifiers={this.state.identifiers} 
 						types={this.state.types}
 					/>
 				}} />

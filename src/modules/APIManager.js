@@ -57,7 +57,7 @@ export default {
     },
     //expanded methods
     getWithDetails: (db) => {
-        return fetch(`${RemoteURL}/${db}?filter[include]=types&filter[include]=companies&access_token=${accessToken}`)
+        return fetch(`${RemoteURL}/${db}?filter[include]=type&filter[include]=company&access_token=${accessToken}`)
         .then(results => results.json())
     }
 }

@@ -3,15 +3,19 @@ import { withRouter } from "react-router";
 
 import Select from "react-select";
 
-import { Form, FormGroup, Label } from "reactstrap";
-//import Button from "reactstrap";
+import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 
 class AddNew extends Component {
 	//set empty local state
 	state = {
 		companyId: "",
 		typeId: "",
-		fiberId: ""
+		fiberId: "",
+		inUse: 1,
+		howMany: 1,
+		partialHank: 0,
+		projectNotes: "",
+		otherNotes: ""
 	}
 
 	// Update state whenever an input field is edited (Steve's code)
@@ -36,10 +40,24 @@ class AddNew extends Component {
 		event.preventDefault()
 		//construct the stash object
 		const stash = {
-			userId: sessionStorage.getItem("userId") || localStorage.getItem("userId")
+			userId: sessionStorage.getItem("userId") || localStorage.getItem("userId"),
 		}
 
-
+		//if the form is filled out
+		if (this.state.fiberId) {
+			//construct the object using data in local state
+			stash.identifierId = parseInt(this.state.fiberId.value);
+			//add object to db
+			// TODO: create POST function
+			this.props.addStash(stash)
+				.then(
+					//change this to occur when user clicks ok?
+					// TODO: allow user to choose if they want toast or clickable alert?
+					setTimeout(() => {
+						this.props.history.push("/")
+					}, 3500)
+				)
+		}
 	}
 
 	render() {
@@ -80,10 +98,9 @@ class AddNew extends Component {
 		  	);
 		};
   	}
-
 		let fiberOptions = [];
-		if (typeId && companyId) {
-			let filteredFibers = this.props.fibers.filter(element => {
+	  	if (typeId && companyId) {
+			let filteredFibers = this.props.identifiers.filter(element => {
 				let isCompany = false;
 				if (element.companyId === companyId.value) {
 					isCompany = true;
@@ -100,9 +117,14 @@ class AddNew extends Component {
 			filteredFibers2.sort(compareValues('number')).map(element => 
 				fiberOptions.push({value: element.id, label: `${element.number} ${element.name2}`})
 				);
+		} else {
+			let fiberList = this.props.identifiers;
+			fiberList.sort(compareValues('number')).map(element => 
+				fiberOptions.push({value: element.id, label: `${element.number} ${element.name2} (${element.company.name} ${element.type.name})`})
+				);
 		}
 		const { fiberId } = this.state;
-				
+
 		return(
 			<div id="dashboard">
 				<Form onSubmit={this.createNewStash}>
@@ -118,6 +140,45 @@ class AddNew extends Component {
 						<Label for="fiberId">Identifier</Label>
 						<Select value={fiberId} onChange={this.handleFiberChange} options={fiberOptions} />
 					</FormGroup>
+					<FormGroup>
+						<Label for="howMany">How many skeins?</Label>
+						<Input type="number" onChange={this.handleFieldChange} />
+					</FormGroup>
+					<FormGroup tag="fieldset">
+						<p>Do you have part of a skein?</p>
+						<FormGroup check inline>
+							<Label check>
+								<Input type="radio" name="partialHank" id="1" />{' '}yes
+							</Label>
+						</FormGroup>
+						<FormGroup check inline>
+							<Label check>
+								<Input type="radio" name="partialHank" id="0" />{' '}no
+							</Label>
+						</FormGroup>
+					</FormGroup>
+					<FormGroup tag="fieldset">
+						<p>Are you using this fiber in a project now?</p>
+						<FormGroup check inline>
+							<Label check>
+								<Input type="radio" name="inUse" id="1" />{' '}yes
+							</Label>
+						</FormGroup>
+						<FormGroup check inline>
+							<Label check>
+								<Input type="radio" name="inUse" id="0" />{' '}no
+							</Label>
+						</FormGroup>
+					</FormGroup>
+					<FormGroup>
+						<Label for="projectNotes">Notes on that project?</Label>
+						<Input type="textarea" name="projectNotes" id="projectNotes" onChange={this.handleFieldChange} />
+					</FormGroup>
+					<FormGroup>
+						<Label for="otherNotes">Any other notes?</Label>
+						<Input type="textarea" name="otherNotes" id="otherNotes" onChange={this.handleFieldChange} />
+					</FormGroup>
+					<Button color="success" type="submit">Submit</Button>
 				</Form>
 			</div>
 		)
