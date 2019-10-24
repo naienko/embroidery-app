@@ -7,6 +7,7 @@ const userId = sessionStorage.getItem("userId") || localStorage.getItem("userId"
 //{"where":{"userId":"1"}}
 
 export default {
+    //generic methods
     getOne: (id, db) => {
         return fetch(`${RemoteURL}/${db}/${id}`)
 		.then(results =>  results.json())
@@ -51,7 +52,12 @@ export default {
         .then(results => results.json())
     },
     getByUserId: (db) => {
-        return fetch(`${RemoteURL}/${db}?filter=%7B%22where%22%3A%7B%22userId%22%3A%22${userId}%22%7D%7D&access_token=${accessToken}`)
+        return fetch(`${RemoteURL}/${db}?filter=[where][userId]=${userId}&access_token=${accessToken}`)
+        .then(results => results.json())
+    },
+    //expanded methods
+    getWithDetails: (db) => {
+        return fetch(`${RemoteURL}/${db}?filter[include]=types&filter[include]=companies&access_token=${accessToken}`)
         .then(results => results.json())
     }
 }

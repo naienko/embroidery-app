@@ -26,7 +26,7 @@ export default class ApplicationView extends Component {
 		APIManager.getAll("companies")
 			.then(companies => newState.companies = companies)
 
-			.then(() => APIManager.getAll("identifiers"))
+			.then(() => APIManager.getWithDetails("identifiers"))
 			.then(identifiers => newState.identifiers = identifiers)
 
 			.then(() => APIManager.getAll("types"))
