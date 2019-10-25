@@ -26,20 +26,20 @@ export default class ApplicationView extends Component {
 		APIManager.getAll("companies")
 			.then(companies => newState.companies = companies)
 
-			.then(() => APIManager.getWithDetails("identifiers"))
+			APIManager.getWithDetails("identifiers")
 			.then(identifiers => newState.identifiers = identifiers)
 
-			.then(() => APIManager.getAll("types"))
+			APIManager.getAll("types")
 			.then(types => newState.types = types)
 
-			.then(() => APIManager.getByUserId("stashes"))
+			APIManager.getByUserId("stashes")
 			.then(stashes => newState.stash = stashes)
 
-			.then(() => APIManager.getByUserId("shoppinglists"))
+			APIManager.getByUserId("shoppinglists")
 			.then(shoppinglists => newState.shoppinglist = shoppinglists)
 
-			.then(() => APIManager.getAll("stitchers"))
-			.then(stitchers => newState.stitchers = stitchers)
+			//.then(() => APIManager.getAll("stitchers"))
+			//.then(stitchers => newState.stitchers = stitchers)
 		 	//fill state -- this setup requires that all the datafetching promises run first
 			//fill state when each datagetting promise returns, instead of all at once?
 			//rerendering happens here
