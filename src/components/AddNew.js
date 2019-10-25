@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 
-import Select from "react-select";
+import Select, { createFilter } from "react-select";
 
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 
@@ -123,6 +123,8 @@ class AddNew extends Component {
 				fiberOptions.push({value: element.id, label: `${element.number} ${element.name2} (${element.company.name} ${element.type.name})`})
 				);
 		}
+		const stringify = option => option.label;
+		const filterOption = createFilter({ ignoreCase: false, stringify });
 		const { fiberId } = this.state;
 
 		return(
@@ -138,7 +140,7 @@ class AddNew extends Component {
 					</FormGroup>
 					<FormGroup>
 						<Label for="fiberId">Identifier</Label>
-						<Select value={fiberId} onChange={this.handleFiberChange} options={fiberOptions} />
+						<Select value={fiberId} onChange={this.handleFiberChange} options={fiberOptions} filterOption={filterOption} />
 					</FormGroup>
 					<FormGroup>
 						<Label for="howMany">How many skeins?</Label>

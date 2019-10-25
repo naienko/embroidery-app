@@ -23,11 +23,20 @@ export default class ApplicationView extends Component {
 		const newState = {};
 
 		//learn how to make these promises run concurrently and non-dependently?
-		APIManager.getAll("companies")
-			.then(companies => newState.companies = companies)
+		try {
+			APIManager.getAll("companies")
+				.then(companies => newState.companies = companies)
+		} catch(err) {
+			console.log(err)
+		}
 
+		try {
 			APIManager.getWithDetails("identifiers")
 			.then(identifiers => newState.identifiers = identifiers)
+		} catch (err) {
+			console.log(err)
+		}
+
 
 			APIManager.getAll("types")
 			.then(types => newState.types = types)
