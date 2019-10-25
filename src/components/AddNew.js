@@ -11,9 +11,9 @@ class AddNew extends Component {
 		companyId: "",
 		typeId: "",
 		fiberId: "",
-		inUse: 1,
+		inUse: true,
 		howMany: 1,
-		partialHank: 0,
+		partialHank: false,
 		projectNotes: "",
 		otherNotes: ""
 	}
@@ -47,7 +47,15 @@ class AddNew extends Component {
 		if (this.state.fiberId) {
 			//construct the object using data in local state
 			stash.identifierId = parseInt(this.state.fiberId.value);
-			stash.howMany = parseInt(this.state.howMany);
+			if (this.state.howMany < 0) {
+				alert("Hey, you can't have a negative amount! If you want to remove skeins from a stash, please use the update button on the home screen.")
+			} else {
+				stash.howMany = parseInt(this.state.howMany);
+			}
+			stash.inUse = this.state.inUse;
+			stash.partialHank = this.state.partialHank;
+			stash.otherNotes = this.state.otherNotes;
+			stash.projectNotes = this.state.projectNotes;
 			//add object to db
 			console.log(stash)
 			//this.props.addStash(stash)
@@ -59,7 +67,7 @@ class AddNew extends Component {
 					}, 3500)
 				)
 		} else {
-			alert("Please select a fiber id!")
+			alert("Please select a fiber!")
 		}
 	}
 
@@ -153,12 +161,12 @@ class AddNew extends Component {
 						<p>Do you have part of a skein?</p>
 						<FormGroup check inline>
 							<Label check>
-								<Input type="radio" name="partialHank" id="1" />{' '}yes
+								<Input type="radio" name="partialHank" id="true" />{' '}yes
 							</Label>
 						</FormGroup>
 						<FormGroup check inline>
 							<Label check>
-								<Input type="radio" name="partialHank" id="0" />{' '}no
+								<Input type="radio" name="partialHank" id="false" />{' '}no
 							</Label>
 						</FormGroup>
 					</FormGroup>
@@ -166,12 +174,12 @@ class AddNew extends Component {
 						<p>Are you using this fiber in a project now?</p>
 						<FormGroup check inline>
 							<Label check>
-								<Input type="radio" name="inUse" id="1" />{' '}yes
+								<Input type="radio" name="inUse" id="true" />{' '}yes
 							</Label>
 						</FormGroup>
 						<FormGroup check inline>
 							<Label check>
-								<Input type="radio" name="inUse" id="0" />{' '}no
+								<Input type="radio" name="inUse" id="false" />{' '}no
 							</Label>
 						</FormGroup>
 					</FormGroup>

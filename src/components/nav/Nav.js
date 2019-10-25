@@ -13,6 +13,7 @@ class NavBar extends Component {
 		APIManager.logout();
 		localStorage.clear();
 		sessionStorage.clear();
+		this.props.history.push("/");
 	}
 	
 	toggle = () => this.setState({collapse: !this.state.collapse});
@@ -33,7 +34,7 @@ class NavBar extends Component {
 					<NavbarToggler onClick={this.toggle} />
 					<Collapse isOpen={this.state.collapse} navbar>
 						<NavItem className="m-1 border rounded border-light">
-							<NavLink onClick={this.logout}>Logout</NavLink>
+							<NavLink href="#" onClick={this.logout}>Logout</NavLink>
 						</NavItem>
 					</Collapse>
 				</Nav>

@@ -52,7 +52,7 @@ export default {
         .then(results => results.json())
     },
     logout: () => {
-        return fetch(`${RemoteURL}/stitchers/logout`, {
+        return fetch(`${RemoteURL}/stitchers/logout?access_token=${accessToken}`, {
             method: "POST"
         })
     },
