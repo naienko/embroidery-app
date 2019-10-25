@@ -19,20 +19,20 @@ class NavBar extends Component {
 	
     render() {
         return (
-			<Navbar light expand="md" color="light" className="sticky-top">
+			<Navbar light expand="md" color="white" className="sticky-top border-bottom border-dark">
 				<Nav pills fill className="w-100">
-					<NavItem className="m-1">
-						<NavLink href="/" active>Home</NavLink>
+					<NavItem className="m-1 border rounded border-light">
+						<NavLink href="/">Home</NavLink>
 					</NavItem>
-					<NavItem className="m-1 pt-2">
-						Welcome <a href="/profile">{this.props.activeUser.username}</a>
+					<NavItem className="m-1 pt-2 border rounded border-light">
+						Welcome{ window.matchMedia('screen and (max-width: 768px)').matches ? <br /> : " " }<a href="/profile">{this.props.activeUser.username}</a>
 					</NavItem>
-					<NavItem className="m-1">
-						<NavLink href="/stash/new">Add New Stash</NavLink>
+					<NavItem className="m-1 border rounded border-light">
+						<NavLink href="/stash/new">Add New</NavLink>
 					</NavItem>
 					<NavbarToggler onClick={this.toggle} />
-					<Collapse isOpen={this.state.collapse}>
-						<NavItem className="m-1">
+					<Collapse isOpen={this.state.collapse} navbar>
+						<NavItem className="m-1 border rounded border-light">
 							<NavLink onClick={this.logout}>Logout</NavLink>
 						</NavItem>
 					</Collapse>
