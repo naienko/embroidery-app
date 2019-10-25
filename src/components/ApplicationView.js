@@ -25,40 +25,48 @@ export default class ApplicationView extends Component {
 		//learn how to make these promises run concurrently and non-dependently?
 		try {
 			APIManager.getAll("companies")
-				.then(companies => newState.companies = companies)
+				.then(companies => this.setState({companies: companies}))
 		} catch(err) {
-			console.log(err)
+			alert(err)
 		}
 
 		try {
 			APIManager.getWithDetails("identifiers")
 			.then(identifiers => newState.identifiers = identifiers)
 		} catch (err) {
-			console.log(err)
+			alert(err)
 		}
 
-
+		try {
 			APIManager.getAll("types")
 			.then(types => newState.types = types)
+		} catch (err) {
+			alert(err)
+		}
 
-			APIManager.getByUserId("stashes")
-			.then(stashes => newState.stash = stashes)
-
-			APIManager.getByUserId("shoppinglists")
-			.then(shoppinglists => newState.shoppinglist = shoppinglists)
-
-			//.then(() => APIManager.getAll("stitchers"))
-			//.then(stitchers => newState.stitchers = stitchers)
-		 	//fill state -- this setup requires that all the datafetching promises run first
-			//fill state when each datagetting promise returns, instead of all at once?
-			//rerendering happens here
+		
+		APIManager.getByUserId("shoppinglists")
+		.then(shoppinglists => newState.shoppinglist = shoppinglists)
+		
+		try {
+			APIManager.getAll("stitchers")
+			.then(stitchers => newState.stitchers = stitchers)
+		} catch (err) {
+			alert(err)
+		}
+		
+		APIManager.getByUserId("stashes")
+		.then(stashes => newState.stash = stashes)
+		//fill state -- this setup requires that all the datafetching promises run first
+		//fill state when each datagetting promise returns, instead of all at once?
+		//rerendering happens here
 			.then(() => this.setState(newState))
+			.then(() => console.log(this.state))
 		}
 		
 		//POST/PUT/PATCH/DELETE here for props to components
 		
 		render() {
-			console.log(this.state)
 			return (
 			//routes go here
 			<React.Fragment>
