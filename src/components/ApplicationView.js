@@ -20,7 +20,7 @@ export default class ApplicationView extends Component {
 
 	//check if the components rendered, then do this
 	componentDidMount() {
-		const newState = {};
+		//const newState = {};
 
 		//learn how to make these promises run concurrently and non-dependently?
 		try {
@@ -32,36 +32,42 @@ export default class ApplicationView extends Component {
 
 		try {
 			APIManager.getWithDetails("identifiers")
-			.then(identifiers => newState.identifiers = identifiers)
+				.then(identifiers => this.setState({identifiers: identifiers}))
 		} catch (err) {
 			alert(err)
 		}
 
 		try {
 			APIManager.getAll("types")
-			.then(types => newState.types = types)
+				.then(types => this.setState({types: types}))
 		} catch (err) {
 			alert(err)
 		}
 
-		
-		APIManager.getByUserId("shoppinglists")
-		.then(shoppinglists => newState.shoppinglist = shoppinglists)
-		
 		try {
-			APIManager.getAll("stitchers")
-			.then(stitchers => newState.stitchers = stitchers)
+			APIManager.getByUserId("shoppinglists")
+			.then(shoppinglists => this.setState({shoppinglists: shoppinglists}))
 		} catch (err) {
 			alert(err)
 		}
 		
-		APIManager.getByUserId("stashes")
-		.then(stashes => newState.stash = stashes)
+		try {
+			APIManager.getAll("stitchers")
+				.then(stitchers => this.setState({stitchers: stitchers}))
+		} catch (err) {
+			alert(err)
+		}
+		
+		try {
+			APIManager.getByUserId("stashes")
+				.then(stashes => this.setState({stashes: stashes}))
+		} catch (err) {
+			alert(err)
+		}
 		//fill state -- this setup requires that all the datafetching promises run first
 		//fill state when each datagetting promise returns, instead of all at once?
 		//rerendering happens here
-			.then(() => this.setState(newState))
-			.then(() => console.log(this.state))
+			//.then(() => this.setState(newState))
 		}
 		
 		//POST/PUT/PATCH/DELETE here for props to components
