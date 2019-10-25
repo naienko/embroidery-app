@@ -9,7 +9,8 @@ class Login extends Component {
     //empty state to start with, to store input fields in
     state = {
         username: "",
-        password: ""
+        password: "",
+        stayLogged: false
     }
 
     // Update state whenever an input field is edited (Steve's code)
@@ -17,6 +18,14 @@ class Login extends Component {
         const stateToChange = {}
         stateToChange[event.target.id] = event.target.value
         this.setState(stateToChange)
+    }
+
+    handleCheckbox = event => {
+        if (event.target.checked) {
+            this.setState({stayLogged: true});
+        } else {
+            this.setState({stayLogged: false});
+        }
     }
 
     //event handler for login (cribbed from Jenna's code)
@@ -31,8 +40,13 @@ class Login extends Component {
             APIManager.login(loginObject).then(
                 user => {
                     //store the input data in sessionStorage (like a cookie)
-                    sessionStorage.setItem("userId", parseInt(user.userId))
-                    sessionStorage.setItem("AccessToken", user.id)
+                    if (this.state.stayLogged === true) {
+                        localStorage.setItem("userId", parseInt(user.userId))
+                        localStorage.setItem("AccessToken", user.id)
+                    } else {
+                        sessionStorage.setItem("userId", parseInt(user.userId))
+                        sessionStorage.setItem("AccessToken", user.id)
+                    }
                     this.props.setAuth()
                 }
             )
@@ -57,6 +71,11 @@ class Login extends Component {
                     </FormGroup>
                     <FormGroup className="text-right">
                         <Button color="primary" type="submit">Sign in</Button>
+                    </FormGroup>
+                    <FormGroup check className="text-right">
+                        <Label check>
+                            <Input type="checkbox" name="stayLogged" id="stayLogged" onClick={this.handleCheckbox} />{' '} keep me logged in
+                        </Label>
                     </FormGroup>
                 </Form>
                 <div className="text-center">

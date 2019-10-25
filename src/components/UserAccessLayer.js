@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import APIManager from "../modules/APIManager";
 
 import ApplicationView from "./ApplicationView";
 
