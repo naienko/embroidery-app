@@ -9,7 +9,7 @@ const userId = sessionStorage.getItem("userId") || localStorage.getItem("userId"
 export default {
     //generic methods
     getOne: (id, db) => {
-        return fetch(`${RemoteURL}/${db}/${id}`)
+        return fetch(`${RemoteURL}/${db}/${id}?access_token=${accessToken}`)
 		.then(results =>  results.json())
     },
     getAll: (db) => {
@@ -50,6 +50,11 @@ export default {
             body: JSON.stringify(loginObject)
         })
         .then(results => results.json())
+    },
+    logout: () => {
+        return fetch(`${RemoteURL}/stitchers/logout`, {
+            method: "POST"
+        })
     },
     getByUserId: (db) => {
         return fetch(`${RemoteURL}/${db}?filter=[where][userId]=${userId}&access_token=${accessToken}`)
