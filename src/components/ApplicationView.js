@@ -20,9 +20,6 @@ export default class ApplicationView extends Component {
 
 	//check if the components rendered, then do this
 	componentDidMount() {
-		//const newState = {};
-
-		//learn how to make these promises run concurrently and non-dependently?
 		try {
 			APIManager.getAll("companies")
 				.then(companies => this.setState({companies: companies}))
@@ -64,13 +61,14 @@ export default class ApplicationView extends Component {
 		} catch (err) {
 			alert(err)
 		}
-		//fill state -- this setup requires that all the datafetching promises run first
-		//fill state when each datagetting promise returns, instead of all at once?
-		//rerendering happens here
-			//.then(() => this.setState(newState))
 		}
 		
 		//POST/PUT/PATCH/DELETE here for props to components
+		addStash = newStash => {
+			return APIManager.add("stashes", newStash)
+				.then(() => APIManager.getByUserId("stashes"))
+				.then(stashes => this.setState({ stashes: stashes }))
+		}
 		
 		render() {
 			return (
@@ -91,6 +89,7 @@ export default class ApplicationView extends Component {
 						companies={this.state.companies} 
 						identifiers={this.state.identifiers} 
 						types={this.state.types}
+						addStash={this.addStash}
 					/>
 				}} />
 			</React.Fragment>

@@ -40,16 +40,17 @@ class AddNew extends Component {
 		event.preventDefault()
 		//construct the stash object
 		const stash = {
-			userId: sessionStorage.getItem("userId") || localStorage.getItem("userId"),
+			userId: parseInt(sessionStorage.getItem("userId")) || parseInt(localStorage.getItem("userId"))
 		}
 
 		//if the form is filled out
 		if (this.state.fiberId) {
 			//construct the object using data in local state
 			stash.identifierId = parseInt(this.state.fiberId.value);
+			stash.howMany = parseInt(this.state.howMany);
 			//add object to db
-			// TODO: create POST function
-			this.props.addStash(stash)
+			console.log(stash)
+			//this.props.addStash(stash)
 				.then(
 					//change this to occur when user clicks ok?
 					// TODO: allow user to choose if they want toast or clickable alert?
@@ -57,6 +58,8 @@ class AddNew extends Component {
 						this.props.history.push("/")
 					}, 3500)
 				)
+		} else {
+			alert("Please select a fiber id!")
 		}
 	}
 
@@ -144,7 +147,7 @@ class AddNew extends Component {
 					</FormGroup>
 					<FormGroup>
 						<Label for="howMany">How many skeins?</Label>
-						<Input type="number" onChange={this.handleFieldChange} />
+						<Input type="number" id="howMany" value={this.state.howMany} onChange={this.handleFieldChange} />
 					</FormGroup>
 					<FormGroup tag="fieldset">
 						<p>Do you have part of a skein?</p>
