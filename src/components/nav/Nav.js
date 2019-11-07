@@ -28,11 +28,11 @@ class NavBar extends Component {
 					<NavItem className="m-1 pt-2 border rounded border-light">
 						Welcome{ window.matchMedia('screen and (max-width: 768px)').matches ? <br /> : " " }<a href="/profile">{this.props.activeUser.username}</a>
 					</NavItem>
-					<NavItem className="m-1 border rounded border-light">
-						<NavLink href="/stash/new">Add New</NavLink>
-					</NavItem>
 					<NavbarToggler onClick={this.toggle} />
 					<Collapse isOpen={this.state.collapse} navbar>
+						<NavItem className="m-1 border rounded border-light">
+							<NavLink href="/stash/new">Add New</NavLink>
+						</NavItem>
 						<NavItem className="m-1 border rounded border-light">
 							<NavLink href="#" onClick={this.logout}>Logout</NavLink>
 						</NavItem>

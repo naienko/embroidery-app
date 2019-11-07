@@ -7,9 +7,7 @@ class Inventory extends Component {
 	render() {
 		return (
 			<div id="dashboard">
-				{ this.props.companies.map(company => <p key={company.id}>{company.name}</p>)}
-				<hr />
-				{ this.props.identifiers.map(identifier => <p key={identifier.id}>{identifier.number}</p>)}
+				{ this.props.stashes.map(stash => <p key={stash.id}>{stash.identifier.number} {stash.identifier.name2} {stash.userId}</p>)}
 			</div>
 		)
 	}

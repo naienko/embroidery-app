@@ -3,9 +3,10 @@ import { Route } from "react-router-dom";
 
 import APIManager from "../modules/APIManager";
 import Inventory from "./Inventory";
-import AddNew from "./AddNew";
+import AddNew from "./management/AddNew";
 import Login from "./auth/Login";
 
+const userId = sessionStorage.getItem("userId") || localStorage.getItem("userId");
 
 export default class ApplicationView extends Component {
 	//empty state to fill while components render
@@ -13,13 +14,14 @@ export default class ApplicationView extends Component {
 		companies: [],
 		identifiers: [],
 		types: [],
-		stash: [],
-		shoppinglist: [],
+		stashes: [],
+		shoppinglists: [],
 		stitchers: []
 	}
 
 	//check if the components rendered, then do this
 	componentDidMount() {
+
 		try {
 			APIManager.getAll("companies")
 				.then(companies => this.setState({companies: companies}))
@@ -28,7 +30,7 @@ export default class ApplicationView extends Component {
 		}
 
 		try {
-			APIManager.getWithDetails("identifiers")
+			APIManager.getWithDetails("identifiers", "filter[include]=type&filter[include]=company")
 				.then(identifiers => this.setState({identifiers: identifiers}))
 		} catch (err) {
 			alert(err)
@@ -56,30 +58,29 @@ export default class ApplicationView extends Component {
 		}
 		
 		try {
-			APIManager.getByUserId("stashes")
+			APIManager.getWithDetails("stashes", `filter[include][identifier]=type&filter[include][identifier]=company&filter[where][userId]=${userId}`)
 				.then(stashes => this.setState({stashes: stashes}))
 		} catch (err) {
 			alert(err)
 		}
-		}
-		
-		//POST/PUT/PATCH/DELETE here for props to components
-		addStash = newStash => {
-			return APIManager.add("stashes", newStash)
-				.then(() => APIManager.getByUserId("stashes"))
-				.then(stashes => this.setState({ stashes: stashes }))
-		}
-		
-		render() {
-			return (
+	}
+	
+	//POST/PUT/PATCH/DELETE here for props to components
+	addStash = newStash => {
+		return APIManager.add("stashes", newStash)
+		.then(() => APIManager.getWithDetails("stashes", `filter[include][identifier]=type&filter[include][identifier]=company&filter[where][userId]=${userId}`))
+		.then(stashes => this.setState({ stashes: stashes }))
+	}
+	
+	render() {
+		return (
 			//routes go here
 			<React.Fragment>
 				<Route exact path="/login" component={Login} />
 
 				<Route exact path="/" render={(props) => {
 					return <Inventory 
-						companies={this.state.companies} 
-						identifiers={this.state.identifiers} 
+						stashes={this.state.stashes} 
 						stitchers={this.state.stitchers}
 					/>
 				}} />

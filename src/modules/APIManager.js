@@ -17,12 +17,12 @@ export default {
 		.then(results =>  results.json())
     },
     delete: (id, db) => {
-        return fetch(`${RemoteURL}/${db}/${id}`, {
+        return fetch(`${RemoteURL}/${db}/${id}?access_token=${accessToken}`, {
             method: "DELETE"
         })
     },
     add: (db, newObject) => {
-        return fetch(`${RemoteURL}/${db}`, {
+        return fetch(`${RemoteURL}/${db}?access_token=${accessToken}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -32,7 +32,7 @@ export default {
 		.then(results =>  results.json())
     },
     edit: (db, newObject, id) => {
-        return fetch(`${RemoteURL}/${db}/${id}`, {
+        return fetch(`${RemoteURL}/${db}/${id}?access_token=${accessToken}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -61,8 +61,8 @@ export default {
         .then(results => results.json())
     },
     //expanded methods
-    getWithDetails: (db) => {
-        return fetch(`${RemoteURL}/${db}?filter[include]=type&filter[include]=company&access_token=${accessToken}`)
+    getWithDetails: (db, filter) => {
+        return fetch(`${RemoteURL}/${db}?${filter}&access_token=${accessToken}`)
         .then(results => results.json())
     }
 }

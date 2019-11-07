@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { withRouter } from "react-router";
 
 import Select, { createFilter } from "react-select";
-
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class AddNew extends Component {
 	//set empty local state
@@ -11,10 +12,8 @@ class AddNew extends Component {
 		companyId: "",
 		typeId: "",
 		fiberId: "",
-		inUse: true,
 		howMany: 1,
 		partialHank: false,
-		projectNotes: "",
 		otherNotes: ""
 	}
 
@@ -24,6 +23,14 @@ class AddNew extends Component {
 		stateToChange[event.target.id] = event.target.value
 		this.setState(stateToChange);
 	}
+
+	handleCheckbox = event => {
+        if (event.target.checked) {
+            this.setState({target: true});
+        } else {
+            this.setState({target: false});
+        }
+    }
 
 	handleCompanyChange = companyId => {
 		this.setState({companyId});
@@ -52,20 +59,20 @@ class AddNew extends Component {
 			} else {
 				stash.howMany = parseInt(this.state.howMany);
 			}
-			stash.inUse = this.state.inUse;
 			stash.partialHank = this.state.partialHank;
 			stash.otherNotes = this.state.otherNotes;
-			stash.projectNotes = this.state.projectNotes;
+
 			//add object to db
 			console.log(stash)
-			//this.props.addStash(stash)
-				.then(
-					//change this to occur when user clicks ok?
-					// TODO: allow user to choose if they want toast or clickable alert?
-					setTimeout(() => {
+			this.props.addStash(stash)
+			.then(
+// TODO: allow user to choose if they want toast or clickable alert?
+				toast.success("New fiber added!",{
+					toastId: 'success',
+					onClose: () => 
 						this.props.history.push("/")
-					}, 3500)
-				)
+				})
+			)
 		} else {
 			alert("Please select a fiber!")
 		}
@@ -92,7 +99,7 @@ class AddNew extends Component {
 				// property doesn't exist on either object
 			return 0;
 	  		}
-  
+
 		  	const varA = (typeof a[key] === 'string') ?
 				a[key].toUpperCase() : a[key];
 	  		const varB = (typeof b[key] === 'string') ?
@@ -140,6 +147,7 @@ class AddNew extends Component {
 
 		return(
 			<div id="dashboard">
+				<ToastContainer autoClose={false} closeOnClick position="top-center" />
 				<Form onSubmit={this.createNewStash}>
 					<FormGroup>
 						<Label for="companyId">Company</Label>
@@ -157,36 +165,15 @@ class AddNew extends Component {
 						<Label for="howMany">How many skeins?</Label>
 						<Input type="number" id="howMany" value={this.state.howMany} onChange={this.handleFieldChange} />
 					</FormGroup>
-					<FormGroup tag="fieldset">
-						<p>Do you have part of a skein?</p>
-						<FormGroup check inline>
-							<Label check>
-								<Input type="radio" name="partialHank" id="true" />{' '}yes
-							</Label>
-						</FormGroup>
-						<FormGroup check inline>
-							<Label check>
-								<Input type="radio" name="partialHank" id="false" />{' '}no
-							</Label>
-						</FormGroup>
+					<FormGroup check inline>
+					Do you have part of a skein?&nbsp;&nbsp;
+						<Label check>
+						<Input type="checkbox" name="partialHank" id="partialHank" onClick={this.handleCheckbox} />yes
+						</Label>
 					</FormGroup>
-					<FormGroup tag="fieldset">
-						<p>Are you using this fiber in a project now?</p>
-						<FormGroup check inline>
-							<Label check>
-								<Input type="radio" name="inUse" id="true" />{' '}yes
-							</Label>
-						</FormGroup>
-						<FormGroup check inline>
-							<Label check>
-								<Input type="radio" name="inUse" id="false" />{' '}no
-							</Label>
-						</FormGroup>
-					</FormGroup>
-					<FormGroup>
-						<Label for="projectNotes">Notes on that project?</Label>
-						<Input type="textarea" name="projectNotes" id="projectNotes" onChange={this.handleFieldChange} />
-					</FormGroup>
+					<div>
+						display list of project this fiber is associated with here
+					</div>
 					<FormGroup>
 						<Label for="otherNotes">Any other notes?</Label>
 						<Input type="textarea" name="otherNotes" id="otherNotes" onChange={this.handleFieldChange} />
@@ -198,4 +185,4 @@ class AddNew extends Component {
 	}
 }
 
-export default withRouter(AddNew)
+export default withRouter(AddNew);
