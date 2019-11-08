@@ -2,7 +2,7 @@ import APIManager from "../../modules/APIManager";
 
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-import { Navbar, Nav, NavItem, NavLink, NavbarToggler, Collapse } from "reactstrap";
+import { Navbar, Nav, NavItem, NavLink, NavbarToggler, Collapse, UncontrolledDropdown, DropdownMenu, DropdownItem, DropdownToggle } from "reactstrap";
 
 class NavBar extends Component {
 	state ={
@@ -21,21 +21,51 @@ class NavBar extends Component {
     render() {
         return (
 			<Navbar light expand="md" color="white" className="sticky-top border-bottom border-dark">
-				<Nav pills fill className="w-100">
-					<NavItem className="m-1 border rounded border-light">
-						<NavLink href="/">Home</NavLink>
-					</NavItem>
-					<NavItem className="m-1 pt-2 border rounded border-light">
-						Welcome{ window.matchMedia('screen and (max-width: 768px)').matches ? <br /> : " " }<a href="/profile">{this.props.activeUser.username}</a>
-					</NavItem>
+				<Nav pills className="w-100">
+					<UncontrolledDropdown nav>
+						<DropdownToggle nav caret>
+							Home
+						</DropdownToggle>
+						<DropdownMenu>
+							<DropdownItem>
+								Welcome{ window.matchMedia('screen and (max-width: 768px)').matches ? <br /> : " " }<a href="/profile">{this.props.activeUser.username}</a>
+							</DropdownItem>
+							<DropdownItem>
+								<NavLink href="#" onClick={this.logout}>Logout</NavLink>
+							</DropdownItem>
+						</DropdownMenu>
+					</UncontrolledDropdown>
 					<NavbarToggler onClick={this.toggle} />
 					<Collapse isOpen={this.state.collapse} navbar>
-						<NavItem className="m-1 border rounded border-light">
-							<NavLink href="/stash/new">Add New</NavLink>
+						<NavItem>
+							Inventory:
 						</NavItem>
-						<NavItem className="m-1 border rounded border-light">
-							<NavLink href="#" onClick={this.logout}>Logout</NavLink>
-						</NavItem>
+						<UncontrolledDropdown nav>
+							<DropdownToggle nav caret>
+								Manage Threads
+							</DropdownToggle>
+							<DropdownMenu>
+								<DropdownItem>
+									List All
+								</DropdownItem>
+								<DropdownItem>
+									<NavLink href="/stash/new">Add New</NavLink>
+								</DropdownItem>
+							</DropdownMenu>
+						</UncontrolledDropdown>
+						<UncontrolledDropdown nav>
+							<DropdownToggle nav caret>
+								Manage Projects
+							</DropdownToggle>
+							<DropdownMenu>
+								<DropdownItem>
+									List All
+								</DropdownItem>
+								<DropdownItem>
+									<NavLink href="#">Add New</NavLink>
+								</DropdownItem>
+							</DropdownMenu>
+						</UncontrolledDropdown>
 					</Collapse>
 				</Nav>
 			</Navbar>
