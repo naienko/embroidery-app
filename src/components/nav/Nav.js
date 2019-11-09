@@ -21,7 +21,7 @@ class NavBar extends Component {
     render() {
         return (
 			<Navbar light expand="md" color="white" className="sticky-top border-bottom border-dark">
-				<Nav pills className="w-100">
+				<Nav pills fill className="w-100">
 					<UncontrolledDropdown nav>
 						<DropdownToggle nav caret>
 							Home
@@ -35,24 +35,21 @@ class NavBar extends Component {
 							</DropdownItem>
 						</DropdownMenu>
 					</UncontrolledDropdown>
-					<NavbarToggler onClick={this.toggle} />
-					<Collapse isOpen={this.state.collapse} navbar>
-						<NavItem>
-							Inventory:
-						</NavItem>
 						<UncontrolledDropdown nav>
 							<DropdownToggle nav caret>
 								Manage Threads
 							</DropdownToggle>
 							<DropdownMenu>
 								<DropdownItem>
-									List All
+									<NavLink href="/threads/list">List All</NavLink>
 								</DropdownItem>
 								<DropdownItem>
-									<NavLink href="/stash/new">Add New</NavLink>
+									<NavLink href="/threads/new">Add New</NavLink>
 								</DropdownItem>
 							</DropdownMenu>
 						</UncontrolledDropdown>
+					<NavbarToggler onClick={this.toggle} />
+					<Collapse isOpen={this.state.collapse} navbar>
 						<UncontrolledDropdown nav>
 							<DropdownToggle nav caret>
 								Manage Projects

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 
-import { UncontrolledCollapse } from "reactstrap";
+import { UncontrolledCollapse, Badge } from "reactstrap";
 
 import FiberList from "./FiberList";
 
@@ -17,7 +17,7 @@ class CompanyList extends Component {
 	render() {
 		return(
 			<React.Fragment>
-				<li class="list-group-item" id={"toggle-company" + this.props.company.id}>{this.props.company.name}</li>
+				<li className="list-group-item" key={"company" + this.props.company.id} id={"toggle-company" + this.props.company.id}>{this.props.company.name} <Badge pill>{this.props.stashes.length}</Badge></li>
 				<UncontrolledCollapse toggler={"#toggle-company" + this.props.company.id}>
 					<ul>
 					{

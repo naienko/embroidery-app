@@ -3,8 +3,10 @@ import { Route } from "react-router-dom";
 
 import APIManager from "../modules/APIManager";
 import Inventory from "./Inventory";
-import AddNew from "./management/AddNew";
 import Login from "./auth/Login";
+
+import AddNew from "./threads/AddNew";
+import MasterList from "./threads/MasterList";
 
 const userId = sessionStorage.getItem("userId") || localStorage.getItem("userId");
 
@@ -79,19 +81,26 @@ export default class ApplicationView extends Component {
 				<Route exact path="/login" component={Login} />
 
 				<Route exact path="/" render={(props) => {
-					return <Inventory 
-						stashes={this.state.stashes} 
-						stitchers={this.state.stitchers}
-					/>
+					return <Inventory />
 				}} />
 
-				<Route path="/stash/new" render={(props) => {
+				<Route path="/threads/new" render={(props) => {
 					return <AddNew 
 						companies={this.state.companies} 
 						identifiers={this.state.identifiers} 
 						types={this.state.types}
 						addStash={this.addStash}
 					/>
+
+					
+				}} />
+
+				<Route path="/threads/list" render={(props) => {
+					return <MasterList 
+						stashes={this.state.stashes}
+					/>
+
+					
 				}} />
 			</React.Fragment>
 		)

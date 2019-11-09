@@ -2,3 +2,15 @@
     margin: 10px;
     padding: 10px;
 }
+
+#dashboard ul {
+    margin-left: -25px;
+}
+
+ul.row-striped li.list-group-item:nth-of-type(odd) {
+    background-color: var(--secondary);
+    color: var(--light);
+}
+ul.row-striped li.list-group-item:nth-of-type(even) {
+    background-color: var(--light);
+}
