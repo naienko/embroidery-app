@@ -7,6 +7,7 @@ import Login from "./auth/Login";
 
 import AddNew from "./threads/AddNew";
 import MasterList from "./threads/MasterList";
+import SingleFiber from "./threads/Single";
 
 const userId = sessionStorage.getItem("userId") || localStorage.getItem("userId");
 
@@ -90,17 +91,19 @@ export default class ApplicationView extends Component {
 						identifiers={this.state.identifiers} 
 						types={this.state.types}
 						addStash={this.addStash}
-					/>
-
-					
+					/>					
 				}} />
 
 				<Route path="/threads/list" render={(props) => {
 					return <MasterList 
 						stashes={this.state.stashes}
 					/>
+				}} />
 
-					
+				<Route exact path="/threads/:stashId" render={(props) => {
+					return <SingleFiber {...props} 
+						stashes={this.state.stashes}
+					/>
 				}} />
 			</React.Fragment>
 		)
