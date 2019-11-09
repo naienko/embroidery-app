@@ -26,9 +26,9 @@ class AddNew extends Component {
 
 	handleCheckbox = event => {
         if (event.target.checked) {
-            this.setState({target: true});
+            this.setState({partialHank: true});
         } else {
-            this.setState({target: false});
+            this.setState({partialHank: false});
         }
     }
 
@@ -70,7 +70,7 @@ class AddNew extends Component {
 				toast.success("New fiber added!",{
 					toastId: 'success',
 					onClose: () => 
-						this.props.history.push("/")
+						this.props.history.push("/threads/list")
 				})
 			)
 		} else {
